@@ -3,3 +3,5 @@ keys*
 venv
 .idea
 *__pycache__*
+culture_fit/token.txt
+*token*
