@@ -4,6 +4,7 @@ import os
 import sys
 import logging
 
+from threading import Thread
 from collections import defaultdict
 from functools import partial
 from typing import List, Tuple
@@ -121,7 +122,10 @@ def stop_and_restart():
 
 @restricted
 def restart(update, context):
-    pass
+    restart_msg = 'Bot is restarting...'
+    update.message.reply_text(restart_msg)
+    logging.info(restart_msg)
+    Thread(target=stop_and_restart).start()
 
 # dynamo db examples to avoid looking up docs
 # def dynamoDBTest():

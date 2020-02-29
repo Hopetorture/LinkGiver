@@ -59,13 +59,17 @@ def ask_question(update, context):
         'Link': update.effective_user.link,
         'FullName': update.effective_user.full_name,
     }
-
-    if user_name_key in CultureCaches().judge_cache and BotConfig().restrict_reruns:
-        update.message.reply_text(BotConfig().phrases.get('already_passed'))
-        return ConversationHandler.END
+    if update.message.text == '/rerun':
+        CultureCaches().clear_caches(user_name_key)
+        reply_with_starting_keyboard(update, BotConfig().phrases.get('rerun', err_msg))
+        return AWAITING_START
 
     if update.message.text == '/restart_bot':
         restart(update, context)
+        return ConversationHandler.END
+
+    if user_name_key in CultureCaches().judge_cache and BotConfig().restrict_reruns:
+        update.message.reply_text(BotConfig().phrases.get('already_passed'))
         return ConversationHandler.END
 
     if update.message.text == 'Начать':
@@ -91,12 +95,7 @@ def ask_question(update, context):
 
     all_answers = {txt: idx for idx, txt in variants.items()}
 
-    if update.message.text == '/rerun':
-        CultureCaches().clear_caches(user_name_key)
-        reply_with_starting_keyboard(update, BotConfig().phrases.get('rerun', err_msg))
-        return AWAITING_START
-
-    elif update.message.text in correct_answers.keys():
+    if update.message.text in correct_answers.keys():
         CultureCaches().user_cache[user_name_key]['yes_count'] += 1
         answer_id = correct_answers[update.message.text]
         CultureCaches().answers_sequence[user_name_key].append(answer_id)
