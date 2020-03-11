@@ -116,7 +116,7 @@ def ask_question(update, context):
         failed = CultureCaches().user_cache[user_name_key]['no_count']
         verdict = BotConfig().phrases.get('failed', err_msg) if failed > 0 \
             else BotConfig().phrases.get('passed', err_msg)
-        update.message.reply_text(f'Конец разговора. {verdict}', reply_markup=reply_markup)
+        update.message.reply_text(f'{verdict}', reply_markup=reply_markup)
         CultureCaches().judge_cache.add(user_name_key)
         set_db_value(username=user_name_key,
                      answers=CultureCaches().answers_sequence[user_name_key],
