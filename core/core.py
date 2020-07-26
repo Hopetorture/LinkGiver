@@ -127,19 +127,3 @@ def restart(update, context):
     logging.info(restart_msg)
     Thread(target=stop_and_restart).start()
 
-# dynamo db examples to avoid looking up docs
-# def dynamoDBTest():
-#     with open('../keys/keys.json', 'r') as f:
-#         keys = json.load(f)
-#     db = boto3.resource('dynamodb', region_name='eu-north-1', **keys)
-#     table = db.Table('LinkGiverTable')
-#     record = table.get_item(Key={"Username": "TestUser1"}).get("Item").get('answers')
-#     # with table.batch_writer() as batch:
-#     #     batch.put_item(Item={"Author": "John Grisham", "Title": "The Rainmaker",
-#     #                      "Category": "Suspense", "Formats": {"Hardcover": "J4SUKVGU", "Paperback": "D7YF4FCX"}})
-#     # data = table.scan()
-#     # table.update_item(Key={'Username': 'TestUser2'},
-#     #                   ExpressionAttributeNames={'#answers': 'answers'},
-#     #                   ExpressionAttributeValues={':new_answers': [True, True, False]},
-#     #                   UpdateExpression="SET #answers = :new_answers")
-#     print(1)

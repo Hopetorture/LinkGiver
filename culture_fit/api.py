@@ -36,13 +36,13 @@ def welcome_msg(update, context):
 
 
 def get_question(user_key: str, increment_iter: bool = True, get_next=False):
-    ucache = CultureCaches().user_cache[user_key]
-    qid = ucache['current_question']
+    user_cache = CultureCaches().user_cache[user_key]
+    qid = user_cache['current_question']
     if get_next:
         qid += 1
     question = CultureCaches().questions_cache.get(qid)
     if increment_iter:
-        ucache['current_question'] += 1
+        user_cache['current_question'] += 1
     return question  # can return None if its a last question
 
 

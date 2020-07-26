@@ -11,6 +11,8 @@ from telegram.ext import (
 from culture_fit.api import welcome_msg, ask_question, AWAITING_START, QUESTIONS
 from core.core import CultureCaches, BotConfig, restart
 
+TOKEN_PATH = 'token.txt'
+
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -24,7 +26,7 @@ def error(update, context):
 def run_bot():
     logging.info('Bot is starting')
     CultureCaches()  # init caches to see a fails quickly
-    with open('token.txt', 'r') as f:
+    with open(TOKEN_PATH, 'r') as f:
         token = f.read().strip()
 
     updater = Updater(token=token, use_context=True)
@@ -44,7 +46,8 @@ def run_bot():
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(questionaire)
-    dispatcher.add_handler(CommandHandler('restart_bot', restart, filters=Filters.user(user_id=BotConfig().admins)))
+    dispatcher.add_handler(CommandHandler('restart_bot', restart,
+                                          filters=Filters.user(user_id=BotConfig().admins)))
 
     updater.start_polling()
     updater.idle()
