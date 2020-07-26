@@ -12,7 +12,7 @@ err_msg = 'Произошла внутренняя ошибка'
 def reply_with_starting_keyboard(update, msg):
     keyboard = [['Начать']]
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-    update.message.reply_text(msg, reply_markup=reply_markup)
+    update.message.reply_text(msg, reply_markup=reply_markup, parse_mode='Markdown')
 
 
 def ask_question_with_keyboard(update, question):
